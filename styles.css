@@ -1,0 +1,15 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: url('video/lucki.mp4') no-repeat center center fixed;
+    background-size: cover;
+    background-color: #000; /* Fallback na czarne tło */
+    color: #fff;
+    text-align: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin: 0;
+}
