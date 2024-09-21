@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajsie</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1c1c1c;
+            color: #fff;
+            text-align: center;
+            padding: 50px;
+        }
+        .container {
+            background-color: #333;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            max-width: 700px;
+            margin: auto;
+        }
+        h1 {
+            font-size: 2.5em;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #ddd;
+            font-size: 1.2em;
+            margin-bottom: 40px;
+        }
+        .social-icons a {
+            display: inline-block;
+            margin: 15px;
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.8em;
+            transition: color 0.3s;
+        }
+        .social-icons a:hover {
+            color: #4CAF50;
+        }
+        .social-icons i {
+            margin-right: 8px;
+        }
+        .attribution {
+            font-size: 0.9em;
+            color: #777;
+            margin-top: 30px;
+        }
+        .attribution a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        .attribution a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>About Me</h1>
+    <p>Follow me on my profiles!</p>
+    
+    <div class="social-icons">
+        <a href="https://www.instagram.com/sxjshsyadi" target="_blank"><i class="fab fa-instagram"></i> Instagram</a><br>
+        <a href="https://github.com/ajssie" target="_blank"><i class="fab fa-github"></i> GitHub</a><br>
+        <a href="https://www.paypal.com/paypalme/aisje" target="_blank"><i class="fab fa-paypal"></i> PayPal</a><br>
+        <a href="https://t.me/ajsiepl" target="_blank"><i class="fab fa-telegram"></i> Telegram</a><br>
+        <a href="https://discord.com/sunrisestore" target="_blank"><i class="fab fa-discord"></i> Discord</a>
+    </div>
+</div>
+
+<div class="attribution">
+    Coded by <a href="https://www.instagram.com/sxjshsyadi" target="_blank">Ajsie</a>.
+</div>
+
+<script>
+    const text = "Ajsie";
+    let index = 0;
+    let direction = 1;
+
+    function animateTitle() {
+        document.title = text.slice(0, index);
+        if (direction === 1) {
+            index++;
+            if (index === text.length) direction = -1;
+        } else {
+            index--;
+            if (index < 0) direction = 1;
+        }
+        setTimeout(animateTitle, 500);
+    }
+
+    animateTitle();
+
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        window.location.href = "https://www.youtube.com/watch?v=RfXToDAeVNo";
+    });
+
+    function detectDevTools() {
+        const threshold = 160;
+        const widthThreshold = 100;
+        let devToolsOpened = false;
+
+        setInterval(function() {
+            if (
+                window.outerHeight - window.innerHeight > threshold ||
+                window.outerWidth - window.innerWidth > widthThreshold 
+            ) {
+                if (!devToolsOpened) {
+                    devToolsOpened = true;
+                    window.location.href = "https://www.youtube.com/watch?v=RfXToDAeVNo";
+                }
+            } else {
+                devToolsOpened = false;
+            }
+        }, 500);
+    }
+
+    detectDevTools();
+</script>
+
+</body>
+</html>
