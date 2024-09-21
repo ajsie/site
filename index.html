@@ -7,51 +7,42 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #1c1c1c;
             color: #fff;
             text-align: center;
             height: 100vh;
-            margin: 0;
-            overflow: hidden;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            flex-direction: column; 
+            overflow: hidden;
+            margin: 0;
+            position: relative;
         }
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
+        video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-        }
-        .overlay h1 {
-            font-size: 3em;
-            color: #4CAF50;
-            cursor: pointer;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+            z-index: -1;
         }
         .container {
-            background-color: #333;
+            background-color: rgba(0, 0, 0, 0.5);
             border-radius: 15px;
             box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
             padding: 40px;
             max-width: 700px;
-            width: 90%;
-            opacity: 0; 
-            transition: opacity 0.5s ease;
-            position: relative;
+            width: 100%;
             display: flex;
             flex-direction: column;
-            align-items: center; 
+            align-items: center;
         }
         h1 {
+            font-family: 'Arial', sans-serif;
             font-size: 2.5em;
-            color: #4CAF50;
+            color: #816b6b; 
             margin: 10px 0;
         }
         .avatar {
@@ -76,10 +67,35 @@
             text-decoration: none;
             color: #fff;
             font-size: 1.8em;
-            transition: color 0.3s;
+            transition: color 0.3s, text-shadow 0.3s;
+            position: relative;
+        }
+        .social-icons a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background: #816b6b; 
+            left: 0;
+            bottom: -5px;
+            transform: scaleX(0);
+            transition: transform 0.3s;
         }
         .social-icons a:hover {
-            color: #4CAF50;
+            color: #816b6b; 
+            text-shadow: 0 0 10px #816b6b; 
+        }
+        .social-icons a:hover::after {
+            transform: scaleX(1);
+        }
+        .attribution {
+            font-size: 0.9em;
+            color: #fff; 
+            margin-top: 30px;
+            display: none; 
+        }
+        .attribution span {
+            color: #816b6b; 
         }
         .snowflake {
             position: fixed;
@@ -91,53 +107,53 @@
             z-index: 1000;
         }
         .mute-button {
-            position: absolute;
+            position: fixed;
             top: 10px;
             right: 10px;
-            background-color: #4CAF50;
-            color: white;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
             border: none;
+            padding: 10px;
             border-radius: 5px;
-            padding: 10px 15px;
             cursor: pointer;
             font-size: 1em;
-            z-index: 1000; 
+            transition: background 0.3s;
         }
         .mute-button:hover {
-            background-color: #45a049;
+            background-color: rgba(255, 255, 255, 0.4);
         }
-        .attribution {
-            font-size: 0.9em;
-            color: #777;
-            margin-top: 20px; 
-        }
-        .attribution a {
-            color: #4CAF50;
-            text-decoration: none;
-        }
-        .attribution a:hover {
-            text-decoration: underline;
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body oncontextmenu="return false;">
 
-<audio id="background-music" loop>
-    <source src="sound/song.mp3" type="audio/mpeg">
-    Your browser does not support the audio tag.
-</audio>
+<video autoplay loop muted>
+    <source src="video/lucki.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
 
 <div class="overlay" id="overlay">
-    <h1>Click to Enter</h1>
+    <h1 style="color: #fff;">Click to Enter...</h1> 
 </div>
 
-<div class="container" id="container">
+<div class="container" id="mainContent" style="display: none;">
     <div class="avatar">
         <img src="images/avatar.png" alt="Avatar">
     </div>
     <h1>Ajsie</h1>
-    
+
     <div class="social-icons">
         <a href="https://www.instagram.com/sxjshsyadi" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
         <a href="https://www.paypal.com/paypalme/aisje" target="_blank"><i class="fab fa-paypal"></i> PayPal</a>
@@ -146,37 +162,43 @@
     </div>
 </div>
 
-<div class="attribution">
-    Coded by <a href="https://www.instagram.com/sxjshsyadi" target="_blank">Ajsie</a>.
+<div class="attribution" id="attribution">
+    Coded by <span>Ajsie</span>.
 </div>
 
-<button class="mute-button" id="mute-button">Mute</button>
+<button class="mute-button" id="muteButton">Mute</button>
+
+<audio id="backgroundMusic" loop>
+    <source src="sound/song.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
 
 <script>
-    const text = "Ajsie";
-    let index = 0;
-    let direction = 1;
+    const overlay = document.getElementById('overlay');
+    const mainContent = document.getElementById('mainContent');
+    const attribution = document.getElementById('attribution');
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    const muteButton = document.getElementById('muteButton');
 
-    function animateTitle() {
-        if (direction === 1) {
-            if (index < text.length) {
-                document.title = text.slice(0, index + 1);
-                index++;
-            } else {
-                direction = -1;
-            }
+    // Ustawienie głośności na 50%
+    backgroundMusic.volume = 0.5;
+
+    overlay.addEventListener('click', function() {
+        overlay.style.display = 'none';
+        mainContent.style.display = 'flex';
+        attribution.style.display = 'block'; 
+        backgroundMusic.play();
+    });
+
+    muteButton.addEventListener('click', function() {
+        if (backgroundMusic.paused) {
+            backgroundMusic.play();
+            muteButton.textContent = 'Mute';
         } else {
-            if (index > 0) {
-                document.title = text.slice(0, index);
-                index--;
-            } else {
-                direction = 1;
-            }
+            backgroundMusic.pause();
+            muteButton.textContent = 'Unmute';
         }
-        setTimeout(animateTitle, 1000);
-    }
-
-    animateTitle();
+    });
 
     function createSnowflake() {
         const snowflake = document.createElement('div');
@@ -197,31 +219,10 @@
         
         setTimeout(() => {
             snowflake.remove();
-        }, duration * 5000);
+        }, duration * 1000);
     }
 
     setInterval(createSnowflake, 500);
-
-    const music = document.getElementById('background-music');
-    const muteButton = document.getElementById('mute-button');
-    const overlay = document.getElementById('overlay');
-    const container = document.getElementById('container');
-    
-    muteButton.addEventListener('click', function() {
-        if (music.paused) {
-            music.play();
-            muteButton.textContent = 'Mute';
-        } else {
-            music.pause();
-            muteButton.textContent = 'Unmute';
-        }
-    });
-
-    overlay.addEventListener('click', function() {
-        overlay.style.display = 'none'; 
-        container.style.opacity = '1'; 
-        music.play(); //
-    });
 </script>
 
 </body>
