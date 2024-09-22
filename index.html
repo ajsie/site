@@ -139,14 +139,14 @@
         .snowflake {
             position: absolute;
             top: 0;
-            font-size: 1.5em; /* Możesz dostosować rozmiar */
-            color: #fff; /* Kolor śnieżynki */
+            font-size: 24px;
+            opacity: 0.8;
         }
     </style>
 </head>
 <body oncontextmenu="return false;">
 
-<video autoplay loop muted>
+<video id="backgroundVideo" muted>
     <source src="video/lucki.mp4" type="video/mp4">
     Your browser does not support the video tag.
 </video>
@@ -190,6 +190,7 @@
     const mainContainer = document.getElementById('mainContainer');
     const footer = document.getElementById('footer');
     const pageTitle = document.getElementById('pageTitle');
+    const backgroundVideo = document.getElementById('backgroundVideo');
 
     backgroundMusic.volume = 0.5;
 
@@ -208,6 +209,7 @@
         mainContainer.style.display = 'flex';
         footer.style.display = 'block'; 
         backgroundMusic.play();
+        backgroundVideo.play(); // Uruchomienie wideo po kliknięciu
     });
 
     function createSnowflake() {
@@ -215,12 +217,13 @@
         snowflake.className = 'snowflake';
         snowflake.innerHTML = '❄';
         snowflake.style.left = Math.random() * window.innerWidth + 'px';
+        snowflake.style.top = '0px'; // Ustawienie na górze
         document.body.appendChild(snowflake);
         
         const duration = Math.random() * 3 + 5;
         snowflake.animate([ 
             { transform: 'translateY(0)' },
-            { transform: 'translateY(100vh)' }
+            { transform: `translateY(${window.innerHeight}px)` } // Leci do dołu
         ], {
             duration: duration * 1000,
             easing: 'linear',
@@ -288,8 +291,7 @@
         setTimeout(titleEffect, titleDeleting ? 200 : 500);
     }
 
-    titleEffect();
+    titleEffect(); 
 </script>
-
 </body>
 </html>
