@@ -30,6 +30,7 @@
             object-fit: cover;
             transform: translate(-50%, -50%);
             z-index: -1;
+            filter: brightness(45%); 
         }
         .click-screen {
             display: flex;
@@ -81,7 +82,7 @@
         h1 {
             font-family: 'Arial', sans-serif;
             font-size: 2.5em;
-            color: #816b6b;
+            color: #000000;
             margin: 0;
             white-space: nowrap;
             margin-bottom: 10px;
@@ -121,15 +122,15 @@
         .footer {
             margin-top: 20px;
             font-size: 1em;
-            color: #ccc;
+            color: #ffffff;
             display: none; 
         }
         .footer span {
-            color: #816b6b;
+            color: #000000;
             font-weight: bold;
         }
         .footer a {
-            color: #816b6b;
+            color: #ffffff;
             text-decoration: none;
             transition: color 0.3s;
         }
@@ -172,7 +173,7 @@
 </div>
 
 <div class="footer" id="footer">
-    Coded by <a href="https://www.instagram.com/sxjshsyadi" target="_blank"><span>Ajsie</span></a>.
+    Coded by <a href="https://www.instagram.com/sxjshsyadi" target="_blank"><span>Ajsie</span></a>
 </div>
 
 <button class="mute-button" id="muteButton">Mute</button>
@@ -192,7 +193,7 @@
     const pageTitle = document.getElementById('pageTitle');
     const backgroundVideo = document.getElementById('backgroundVideo');
 
-    backgroundMusic.volume = 0.5;
+    backgroundMusic.volume = 0.4;
 
     muteButton.addEventListener('click', function() {
         if (backgroundMusic.paused) {
@@ -209,7 +210,7 @@
         mainContainer.style.display = 'flex';
         footer.style.display = 'block'; 
         backgroundMusic.play();
-        backgroundVideo.play(); // Uruchomienie wideo po kliknięciu
+        backgroundVideo.play(); 
     });
 
     function createSnowflake() {
@@ -217,13 +218,13 @@
         snowflake.className = 'snowflake';
         snowflake.innerHTML = '❄';
         snowflake.style.left = Math.random() * window.innerWidth + 'px';
-        snowflake.style.top = '0px'; // Ustawienie na górze
+        snowflake.style.top = '0px'; 
         document.body.appendChild(snowflake);
         
         const duration = Math.random() * 3 + 5;
         snowflake.animate([ 
             { transform: 'translateY(0)' },
-            { transform: `translateY(${window.innerHeight}px)` } // Leci do dołu
+            { transform: `translateY(${window.innerHeight}px)` } 
         ], {
             duration: duration * 1000,
             easing: 'linear',
@@ -232,7 +233,7 @@
         
         setTimeout(() => {
             snowflake.remove();
-        }, duration * 1000);
+        }, duration * 970);
     }
 
     setInterval(createSnowflake, 500);
@@ -284,14 +285,11 @@
             titleDeleting = false;
         }
 
-        if (titleIndex === 1 && titleDeleting) {
-            titleIndex++;
-        }
-
-        setTimeout(titleEffect, titleDeleting ? 200 : 500);
+        setTimeout(titleEffect, titleDeleting ? 300 : 500);
     }
 
-    titleEffect(); 
+    titleEffect();
 </script>
+
 </body>
 </html>
