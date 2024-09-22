@@ -3,20 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@Ajsie</title>
+    <title id="pageTitle">@Ajsie</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
     <style>
         body {
             font-family: 'Arial', sans-serif;
             color: #fff;
             text-align: center;
             height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
             margin: 0;
             position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
         }
         video {
             position: absolute;
@@ -28,26 +31,45 @@
             transform: translate(-50%, -50%);
             z-index: -1;
         }
+        .click-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.7);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+        }
+        .click-text {
+            font-size: 2.5em;
+            color: #fff;
+        }
         .container {
             background-color: rgba(0, 0, 0, 0.5);
             border-radius: 15px;
             box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
-            padding: 40px;
-            max-width: 700px;
+            padding: 20px;
+            max-width: 500px;
             width: 100%;
+            display: none; 
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        .profile {
             display: flex;
             flex-direction: column;
             align-items: center;
-        }
-        h1 {
-            font-family: 'Arial', sans-serif;
-            font-size: 2.5em;
-            color: #816b6b; 
-            margin: 10px 0;
+            margin-top: 20px;
         }
         .avatar {
-            width: 100px;
-            height: 100px;
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
             overflow: hidden;
             margin-bottom: 10px;
@@ -56,55 +78,29 @@
             width: 100%;
             height: auto;
         }
+        h1 {
+            font-family: 'Arial', sans-serif;
+            font-size: 2.5em;
+            color: #816b6b;
+            margin: 0;
+            white-space: nowrap;
+            margin-bottom: 10px;
+        }
         .social-icons {
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
         }
         .social-icons a {
-            display: block;
-            margin: 15px;
             text-decoration: none;
             color: #fff;
-            font-size: 1.8em;
+            font-size: 2.2em;
+            margin: 0 15px;
             transition: color 0.3s, text-shadow 0.3s;
-            position: relative;
-        }
-        .social-icons a::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 3px;
-            background: #816b6b; 
-            left: 0;
-            bottom: -5px;
-            transform: scaleX(0);
-            transition: transform 0.3s;
         }
         .social-icons a:hover {
-            color: #816b6b; 
-            text-shadow: 0 0 10px #816b6b; 
-        }
-        .social-icons a:hover::after {
-            transform: scaleX(1);
-        }
-        .attribution {
-            font-size: 0.9em;
-            color: #fff; 
-            margin-top: 30px;
-            display: none; 
-        }
-        .attribution span {
-            color: #816b6b; 
-        }
-        .snowflake {
-            position: fixed;
-            top: -10px;
-            color: white;
-            font-size: 1em;
-            opacity: 0.7;
-            pointer-events: none;
-            z-index: 1000;
+            color: #816b6b;
+            text-shadow: 0 0 10px #816b6b;
         }
         .mute-button {
             position: fixed;
@@ -122,20 +118,31 @@
         .mute-button:hover {
             background-color: rgba(255, 255, 255, 0.4);
         }
-        .overlay {
+        .footer {
+            margin-top: 20px;
+            font-size: 1em;
+            color: #ccc;
+            display: none; 
+        }
+        .footer span {
+            color: #816b6b;
+            font-weight: bold;
+        }
+        .footer a {
+            color: #816b6b;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer a:hover {
+            color: #fff;
+        }
+        .snowflake {
             position: absolute;
             top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
+            font-size: 1.5em; /* Możesz dostosować rozmiar */
+            color: #fff; /* Kolor śnieżynki */
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body oncontextmenu="return false;">
 
@@ -144,26 +151,28 @@
     Your browser does not support the video tag.
 </video>
 
-<div class="overlay" id="overlay">
-    <h1 style="color: #fff;">Click to Enter...</h1> 
+<div class="click-screen" id="clickScreen">
+    <p class="click-text">Click to enter</p>
 </div>
 
-<div class="container" id="mainContent" style="display: none;">
-    <div class="avatar">
-        <img src="images/avatar.png" alt="Avatar">
+<div class="container" id="mainContainer">
+    <div class="profile">
+        <div class="avatar">
+            <img src="images/avatar.png" alt="Avatar">
+        </div>
+        <h1 id="typingEffect">Ajsie</h1>
     </div>
-    <h1>Ajsie</h1>
 
     <div class="social-icons">
-        <a href="https://www.instagram.com/sxjshsyadi" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-        <a href="https://www.paypal.com/paypalme/aisje" target="_blank"><i class="fab fa-paypal"></i> PayPal</a>
-        <a href="https://t.me/ajsiepl" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
-        <a href="https://discord.com/sunrisestore" target="_blank"><i class="fab fa-discord"></i> Discord</a>
+        <a href="https://www.instagram.com/sxjshsyadi" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.paypal.com/paypalme/aisje" target="_blank"><i class="fab fa-paypal"></i></a>
+        <a href="https://t.me/ajsiepl" target="_blank"><i class="fab fa-telegram"></i></a>
+        <a href="https://discord.com/sunrisestore" target="_blank"><i class="fab fa-discord"></i></a>
     </div>
 </div>
 
-<div class="attribution" id="attribution">
-    Coded by <span>Ajsie</span>.
+<div class="footer" id="footer">
+    Coded by <a href="https://www.instagram.com/sxjshsyadi" target="_blank"><span>Ajsie</span></a>.
 </div>
 
 <button class="mute-button" id="muteButton">Mute</button>
@@ -174,21 +183,15 @@
 </audio>
 
 <script>
-    const overlay = document.getElementById('overlay');
-    const mainContent = document.getElementById('mainContent');
-    const attribution = document.getElementById('attribution');
     const backgroundMusic = document.getElementById('backgroundMusic');
     const muteButton = document.getElementById('muteButton');
+    const typingEffectElement = document.getElementById('typingEffect');
+    const clickScreen = document.getElementById('clickScreen');
+    const mainContainer = document.getElementById('mainContainer');
+    const footer = document.getElementById('footer');
+    const pageTitle = document.getElementById('pageTitle');
 
-    // Ustawienie głośności na 50%
     backgroundMusic.volume = 0.5;
-
-    overlay.addEventListener('click', function() {
-        overlay.style.display = 'none';
-        mainContent.style.display = 'flex';
-        attribution.style.display = 'block'; 
-        backgroundMusic.play();
-    });
 
     muteButton.addEventListener('click', function() {
         if (backgroundMusic.paused) {
@@ -198,6 +201,13 @@
             backgroundMusic.pause();
             muteButton.textContent = 'Unmute';
         }
+    });
+
+    clickScreen.addEventListener('click', function() {
+        clickScreen.style.display = 'none';
+        mainContainer.style.display = 'flex';
+        footer.style.display = 'block'; 
+        backgroundMusic.play();
     });
 
     function createSnowflake() {
@@ -223,6 +233,62 @@
     }
 
     setInterval(createSnowflake, 500);
+
+    const text = "Ajsie";
+    let index = 1;
+    let deleting = false;
+
+    function typeEffect() {
+        if (!deleting && index <= text.length) {
+            typingEffectElement.textContent = text.slice(0, index);
+            index++;
+        } else if (deleting && index > 1) {
+            typingEffectElement.textContent = text.slice(0, index);
+            index--;
+        }
+
+        if (index === text.length + 1) {
+            deleting = true;
+        } else if (index === 1) {
+            deleting = false;
+        }
+
+        if (index === 1 && deleting) {
+            index++;
+        }
+
+        setTimeout(typeEffect, deleting ? 200 : 500);
+    }
+
+    typeEffect(); 
+
+    const titleText = "@Ajsie";
+    let titleIndex = 1;
+    let titleDeleting = false;
+
+    function titleEffect() {
+        if (!titleDeleting && titleIndex <= titleText.length) {
+            pageTitle.textContent = titleText.slice(0, titleIndex);
+            titleIndex++;
+        } else if (titleDeleting && titleIndex > 1) {
+            pageTitle.textContent = titleText.slice(0, titleIndex);
+            titleIndex--;
+        }
+
+        if (titleIndex === titleText.length + 1) {
+            titleDeleting = true;
+        } else if (titleIndex === 1) {
+            titleDeleting = false;
+        }
+
+        if (titleIndex === 1 && titleDeleting) {
+            titleIndex++;
+        }
+
+        setTimeout(titleEffect, titleDeleting ? 200 : 500);
+    }
+
+    titleEffect();
 </script>
 
 </body>
