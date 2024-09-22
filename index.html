@@ -66,11 +66,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 20px;
+            margin-top: 10px;
         }
         .avatar {
-            width: 130px;
-            height: 130px;
+            width: 140px;
+            height: 140px;
             border-radius: 50%;
             overflow: hidden;
             margin-bottom: 10px;
@@ -82,7 +82,7 @@
         h1 {
             font-family: 'Arial', sans-serif;
             font-size: 2.5em;
-            color: #000000;
+            color: #ffffff;
             margin: 0;
             white-space: nowrap;
             margin-bottom: 10px;
@@ -100,8 +100,8 @@
             transition: color 0.3s, text-shadow 0.3s;
         }
         .social-icons a:hover {
-            color: #816b6b;
-            text-shadow: 0 0 10px #816b6b;
+            color: #8f8f8f;
+            text-shadow: 0 0 10px #b3b1b1;
         }
         .mute-button {
             position: fixed;
@@ -153,7 +153,7 @@
 </video>
 
 <div class="click-screen" id="clickScreen">
-    <p class="click-text">Click to enter</p>
+    <p class="click-text">Click to enter...</p>
 </div>
 
 <div class="container" id="mainContainer">
@@ -236,7 +236,8 @@
         }, duration * 970);
     }
 
-    setInterval(createSnowflake, 500);
+    // Increased frequency of snowflakes
+    setInterval(createSnowflake, 300);
 
     const text = "Ajsie";
     let index = 1;
@@ -285,7 +286,7 @@
             titleDeleting = false;
         }
 
-        setTimeout(titleEffect, titleDeleting ? 300 : 500);
+        setTimeout(titleEffect, titleDeleting ? 200 : 500);
     }
 
     titleEffect();
