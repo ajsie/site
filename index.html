@@ -143,6 +143,14 @@
             font-size: 24px;
             opacity: 0.8;
         }
+        .copyright {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.8em;
+            color: #888; /* Szary kolor */
+            font-family: 'Arial', sans-serif; /* GitHubowa czcionka */
+        }
     </style>
 </head>
 <body oncontextmenu="return false;">
@@ -174,6 +182,10 @@
 
 <div class="footer" id="footer">
     Coded by <a href="https://www.instagram.com/sxjshsyadi" target="_blank"><span>Ajsie</span></a>
+</div>
+
+<div class="copyright">
+    © ajsie.xyz (2024)
 </div>
 
 <button class="mute-button" id="muteButton">Mute</button>
@@ -265,32 +277,7 @@
         setTimeout(typeEffect, deleting ? 200 : 500);
     }
 
-    typeEffect(); 
-
-    const titleText = "@Ajsie";
-    let titleIndex = 1;
-    let titleDeleting = false;
-
-    function titleEffect() {
-        if (!titleDeleting && titleIndex <= titleText.length) {
-            pageTitle.textContent = titleText.slice(0, titleIndex);
-            titleIndex++;
-        } else if (titleDeleting && titleIndex > 1) {
-            pageTitle.textContent = titleText.slice(0, titleIndex);
-            titleIndex--;
-        }
-
-        if (titleIndex === titleText.length + 1) {
-            titleDeleting = true;
-        } else if (titleIndex === 1) {
-            titleDeleting = false;
-        }
-
-        setTimeout(titleEffect, titleDeleting ? 200 : 500);
-    }
-
-    titleEffect();
+    typeEffect();
 </script>
-
 </body>
 </html>
