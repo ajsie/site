@@ -21,7 +21,7 @@
             align-items: center;
             flex-direction: column;
         }
-        video {
+        .background-image-mobile {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -30,7 +30,19 @@
             object-fit: cover;
             transform: translate(-50%, -50%);
             z-index: -1;
-            filter: brightness(45%); 
+            filter: brightness(45%);
+            display: none; 
+        }
+        .background-image-desktop {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            filter: brightness(45%);
         }
         .click-screen {
             display: flex;
@@ -126,7 +138,7 @@
             display: none; 
         }
         .footer span {
-            color: #000000;
+            color: #ffffff;
             font-weight: bold;
         }
         .footer a {
@@ -148,17 +160,40 @@
             bottom: 10px;
             right: 10px;
             font-size: 0.8em;
-            color: #888; /* Szary kolor */
-            font-family: 'Arial', sans-serif; /* GitHubowa czcionka */
+            color: #888; 
+            font-family: 'Arial', sans-serif; 
+        }
+
+        /* Media query for mobile devices */
+        @media only screen and (max-width: 768px) {
+            .background-image-mobile {
+                display: block; 
+            }
+            .background-image-desktop {
+                display: none; 
+            }
+        }
+
+        /* Media query for desktop */
+        @media only screen and (min-width: 769px) {
+            .background-image-desktop {
+                display: block; 
+            }
+            .background-image-mobile {
+                display: none;
+            }
         }
     </style>
 </head>
 <body oncontextmenu="return false;">
 
-<video id="backgroundVideo" muted>
+<!-- Wideo dla desktopów -->
+<video class="background-image-desktop" autoplay muted loop>
     <source src="video/lucki.mp4" type="video/mp4">
     Your browser does not support the video tag.
 </video>
+
+<img src="video/image.png" class="background-image-mobile">
 
 <div class="click-screen" id="clickScreen">
     <p class="click-text">Click to enter...</p>
@@ -169,7 +204,7 @@
         <div class="avatar">
             <img src="images/avatar.png" alt="Avatar">
         </div>
-        <h1 id="typingEffect">Ajsie</h1>
+        <h1 id="typingEffect"></h1> 
     </div>
 
     <div class="social-icons">
@@ -203,7 +238,6 @@
     const mainContainer = document.getElementById('mainContainer');
     const footer = document.getElementById('footer');
     const pageTitle = document.getElementById('pageTitle');
-    const backgroundVideo = document.getElementById('backgroundVideo');
 
     backgroundMusic.volume = 0.4;
 
@@ -222,7 +256,7 @@
         mainContainer.style.display = 'flex';
         footer.style.display = 'block'; 
         backgroundMusic.play();
-        backgroundVideo.play(); 
+        startTypingEffect(); 
     });
 
     function createSnowflake() {
@@ -251,33 +285,43 @@
     // Increased frequency of snowflakes
     setInterval(createSnowflake, 300);
 
-    const text = "Ajsie";
-    let index = 1;
-    let deleting = false;
+    function startTypingEffect() {
+        const text = "Ajsie";
+        let index = 0;
 
-    function typeEffect() {
-        if (!deleting && index <= text.length) {
-            typingEffectElement.textContent = text.slice(0, index);
-            index++;
-        } else if (deleting && index > 1) {
-            typingEffectElement.textContent = text.slice(0, index);
-            index--;
+        function type() {
+            if (index < text.length) {
+                typingEffectElement.innerHTML += text.charAt(index);
+                index++;
+                setTimeout(type, 400);
+            } else {
+                setTimeout(remove, 1000);
+            }
         }
 
-        if (index === text.length + 1) {
-            deleting = true;
-        } else if (index === 1) {
-            deleting = false;
+        function remove() {
+            if (typingEffectElement.innerHTML.length > 1) { 
+                typingEffectElement.innerHTML = typingEffectElement.innerHTML.slice(0, -1);
+                setTimeout(remove, 400);
+            } else {
+                typingEffectElement.innerHTML = "A"; 
+                index = 1;
+                setTimeout(type, 500); 
+            }
         }
 
-        if (index === 1 && deleting) {
-            index++;
-        }
-
-        setTimeout(typeEffect, deleting ? 200 : 500);
+        type(); 
     }
 
-    typeEffect();
+    window.addEventListener('resize', function() {
+        if (window.innerWidth < 768) {
+            document.querySelector('.background-image-mobile').style.display = 'block';
+            document.querySelector('.background-image-desktop').style.display = 'none';
+        } else {
+            document.querySelector('.background-image-mobile').style.display = 'none';
+            document.querySelector('.background-image-desktop').style.display = 'block';
+        }
+    });
 </script>
 </body>
-</html>
+</html>  
